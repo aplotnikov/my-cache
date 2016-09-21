@@ -28,8 +28,8 @@ target/
 gradle-app.setting
 !gradle-wrapper.jar
 !gradle-wrapper.properties
-!gradle/*.gradle
-!gradle/configuration/
+!static-code-analyze.gradle
+!codeharc.groovy
 
 # IntelliJ project files
 *.iml

@@ -1,0 +1,51 @@
+ext {
+    reportDirectory = "$project.buildDir/reports/"
+}
+
+apply plugin: 'pmd'
+apply plugin: 'codenarc'
+apply plugin: 'jacoco'
+apply plugin: 'info.solidsoft.pitest'
+
+pmd {
+    toolVersion = '5.5.1'
+    reportsDir = file("$reportDirectory/pmd")
+    sourceSets = [sourceSets.main]
+    ruleSets = [
+            'java-basic',
+            'java-braces',
+            'java-clone',
+            'java-codesize',
+            'java-empty',
+            'java-finalizers',
+            'java-strictexception',
+            'java-strings',
+            'java-sunsecure',
+            'java-typeresolution',
+            'java-unnecessary'
+    ]
+}
+
+codenarc {
+    toolVersion = '0.25.2'
+    reportsDir = file("$reportDirectory/codenarc")
+    sourceSets = [sourceSets.test]
+    configFile = file("$project.rootDir/gradle/codeharc.groovy")
+}
+
+jacoco {
+    toolVersion = "0.7.7.201606060606"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled true
+        html.destination "$reportDirectory/jacoco"
+    }
+}
+
+pitest {
+    targetClasses = ['org.home.cache.*']
+    threads = 4
+}
